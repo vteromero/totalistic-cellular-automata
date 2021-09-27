@@ -1,0 +1,13 @@
+{
+  "name": "totalistic-cellular-automata",
+  "version": "0.0.1",
+  "description": "Totalistic Cellular Automata",
+  "scripts": {
+    "start": "http-server"
+  },
+  "author": "Vicente Romero Calero",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^13.0.2"
+  }
+}
