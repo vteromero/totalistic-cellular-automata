@@ -53,4 +53,11 @@ window.addEventListener('DOMContentLoaded', () => {
   console.log('cellSize:', cellSize)
   console.log('table:', table.join(''))
   console.log('palette:', palette.join(','))
+
+  const sidebar = document.querySelector('.sidebar')
+  const toggleButton = document.querySelector('.sidebar__toggle-button')
+  toggleButton.onclick = function () {
+    sidebar.classList.toggle('sidebar--large')
+    toggleButton.classList.toggle('sidebar__toggle-button--close')
+  }
 })

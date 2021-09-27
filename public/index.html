@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Totalistic Cellular Automata</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <div class="content">
+    <div class="sidebar">
+      <button class="sidebar__toggle-button">&gt;</button>
+    </div>
+    <div class="canvas-container">
+      <canvas id="canvas"></canvas>
+    </div>
+  </div>
 
   <script type="module" src="./lib.js"></script>
   <script type="module" src="./index.js"></script>
