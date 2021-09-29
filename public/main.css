@@ -22,10 +22,14 @@ body {
 }
 
 .sidebar__toggle-button {
+  background-color: #13adbd;
   border-radius: 50%;
   border: none;
   box-shadow: 0px 1px 4px 1px rgba(0 ,0, 0, .3);
+  color: #000066;
   cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
   height: 40px;
   left: 100%;
   position: absolute;
