@@ -11,14 +11,14 @@ body {
 }
 
 .sidebar {
-  background-color: #0000ff;
-  flex-basis: 2rem;
+  background-color: #484848;
+  width: 2rem;
   position: relative;
   transition: 1s ease;
 }
 
 .sidebar--large {
-  flex-basis: 20rem;
+  width: 24rem;
 }
 
 .sidebar__toggle-button {
@@ -37,6 +37,42 @@ body {
 
 .sidebar__toggle-button--close {
   transform: translateX(-50%) rotate(180deg);
+}
+
+.sidebar__content {
+  overflow: hidden;
+}
+
+.sidebar__row {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 3rem 0rem 2rem;
+}
+
+.sidebar__label {
+  color: #c0c0c0;
+  display: block;
+  white-space: nowrap;
+}
+
+.sidebar__text-input {
+  border: 3px solid #ccc;
+  box-sizing: border-box;
+  margin: 0.5rem 0;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  transition: 0.5s;
+  width: 100%;
+}
+
+.sidebar__text-input:focus {
+  border-color: #000066;
+}
+
+.sidebar__desc {
+  color: #b0b0b0;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .canvas-container {
