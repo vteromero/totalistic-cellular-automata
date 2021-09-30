@@ -24,7 +24,7 @@ const parseCellSizeParam = (cellSize) => (
   Number(cellSize) || DEFAULT_CELL_SIZE
 )
 
-window.addEventListener('DOMContentLoaded', () => {
+const generateAutomatonFromUrlParams = () => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const colors = parseColorsParam(urlParams.get('colors'))
@@ -46,6 +46,32 @@ window.addEventListener('DOMContentLoaded', () => {
   resizeCanvas(canvas, width, height)
 
   automaton.drawGrid(canvas, grid, cellSize, palette)
+}
+
+const generateAutomatonFromForm = () => {
+  const colors = parseColorsParam(document.querySelector('#colors').value)
+  const automaton = createTotatlisticCellularAutomaton(colors)
+
+  const cellSize = parseCellSizeParam(document.querySelector('#cell-size').value)
+  const rows = parseRowsParam(document.querySelector('#rows').value)
+  const columns = parseColumnsParam(document.querySelector('#columns').value)
+  const table = automaton.randomBalancedTable()
+  const palette = automaton.randomPalette()
+
+  const firstRow = automaton.randomRow(columns)
+  const grid = automaton.createGrid(rows, table, firstRow)
+
+  const canvas = document.getElementById('canvas')
+  const width = columns * cellSize
+  const height = rows * cellSize
+
+  resizeCanvas(canvas, width, height)
+
+  automaton.drawGrid(canvas, grid, cellSize, palette)
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  generateAutomatonFromUrlParams()
 
   console.log('colors:', colors)
   console.log('rows:', rows)
@@ -60,4 +86,14 @@ window.addEventListener('DOMContentLoaded', () => {
     sidebar.classList.toggle('sidebar--large')
     toggleButton.classList.toggle('sidebar__toggle-button--close')
   }
+
+  document.querySelector('#colors').value = colors
+  document.querySelector('#cell-size').value = cellSize
+  document.querySelector('#rows').value = rows
+  document.querySelector('#columns').value = columns
+
+  const generateButton = document.querySelector('#generate-automaton')
+  generateButton.addEventListener('click', () => {
+    generateAutomatonFromForm()
+  })
 })
