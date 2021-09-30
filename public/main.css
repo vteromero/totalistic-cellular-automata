@@ -79,6 +79,14 @@ body {
   white-space: nowrap;
 }
 
+.sidebar__button {
+  background-color: #13adbd;
+  border: none;
+  color: #000066;
+  padding: 1rem 2rem;
+  white-space: nowrap;
+}
+
 .canvas-container {
   align-items: center;
   display: flex;
