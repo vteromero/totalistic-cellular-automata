@@ -1,6 +1,6 @@
 import {
   resizeCanvas,
-  createTotatlisticCellularAutomaton
+  totatlisticCellularAutomatonFunctions
 } from './lib.js'
 
 const DEFAULT_COLORS      = 4
@@ -28,16 +28,16 @@ const generateAutomatonFromUrlParams = () => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const colors = parseColorsParam(urlParams.get('colors'))
-  const automaton = createTotatlisticCellularAutomaton(colors)
+  const automatonFuncs = totatlisticCellularAutomatonFunctions(colors)
 
   const rows = parseRowsParam(urlParams.get('rows'))
   const columns = parseColumnsParam(urlParams.get('columns'))
   const cellSize = parseCellSizeParam(urlParams.get('cellSize'))
-  const table = automaton.tableStrToArray(urlParams.get('table')) || automaton.randomBalancedTable()
-  const palette = automaton.paletteStrToArray(urlParams.get('palette')) || automaton.randomPalette()
+  const table = automatonFuncs.tableStrToArray(urlParams.get('table')) || automatonFuncs.randomBalancedTable()
+  const palette = automatonFuncs.paletteStrToArray(urlParams.get('palette')) || automatonFuncs.randomPalette()
 
-  const firstRow = automaton.randomRow(columns)
-  const grid = automaton.createGrid(rows, table, firstRow)
+  const firstRow = automatonFuncs.randomRow(columns)
+  const grid = automatonFuncs.createGrid(rows, table, firstRow)
 
   const canvas = document.getElementById('canvas')
   const width = columns * cellSize
@@ -45,21 +45,21 @@ const generateAutomatonFromUrlParams = () => {
 
   resizeCanvas(canvas, width, height)
 
-  automaton.drawGrid(canvas, grid, cellSize, palette)
+  automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 }
 
 const generateAutomatonFromForm = () => {
   const colors = parseColorsParam(document.querySelector('#colors').value)
-  const automaton = createTotatlisticCellularAutomaton(colors)
+  const automatonFuncs = totatlisticCellularAutomatonFunctions(colors)
 
   const cellSize = parseCellSizeParam(document.querySelector('#cell-size').value)
   const rows = parseRowsParam(document.querySelector('#rows').value)
   const columns = parseColumnsParam(document.querySelector('#columns').value)
-  const table = automaton.randomBalancedTable()
-  const palette = automaton.randomPalette()
+  const table = automatonFuncs.randomBalancedTable()
+  const palette = automatonFuncs.randomPalette()
 
-  const firstRow = automaton.randomRow(columns)
-  const grid = automaton.createGrid(rows, table, firstRow)
+  const firstRow = automatonFuncs.randomRow(columns)
+  const grid = automatonFuncs.createGrid(rows, table, firstRow)
 
   const canvas = document.getElementById('canvas')
   const width = columns * cellSize
@@ -67,7 +67,7 @@ const generateAutomatonFromForm = () => {
 
   resizeCanvas(canvas, width, height)
 
-  automaton.drawGrid(canvas, grid, cellSize, palette)
+  automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 }
 
 window.addEventListener('DOMContentLoaded', () => {

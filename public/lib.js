@@ -128,7 +128,7 @@ const drawGrid = (canvas, grid, cellSize, palette) => {
   })
 }
 
-export const createTotatlisticCellularAutomaton = (colors) => (
+export const totatlisticCellularAutomatonFunctions = (colors) => (
   {
     tableStrToArray: tableStrToArray(colors),
     randomTable: randomTable(colors),
