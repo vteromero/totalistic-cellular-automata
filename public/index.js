@@ -30,9 +30,9 @@ const generateAutomatonFromUrlParams = () => {
   const colors = parseColorsParam(urlParams.get('colors'))
   const automatonFuncs = totatlisticCellularAutomatonFunctions(colors)
 
+  const cellSize = parseCellSizeParam(urlParams.get('cellSize'))
   const rows = parseRowsParam(urlParams.get('rows'))
   const columns = parseColumnsParam(urlParams.get('columns'))
-  const cellSize = parseCellSizeParam(urlParams.get('cellSize'))
   const table = automatonFuncs.tableStrToArray(urlParams.get('table')) || automatonFuncs.randomBalancedTable()
   const palette = automatonFuncs.paletteStrToArray(urlParams.get('palette')) || automatonFuncs.randomPalette()
 
@@ -46,6 +46,8 @@ const generateAutomatonFromUrlParams = () => {
   resizeCanvas(canvas, width, height)
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
+
+  return { colors, cellSize, rows, columns, table, palette }
 }
 
 const generateAutomatonFromForm = () => {
@@ -68,17 +70,30 @@ const generateAutomatonFromForm = () => {
   resizeCanvas(canvas, width, height)
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
+
+  return { colors, cellSize, rows, columns, table, palette }
+}
+
+const logAutomatonProps = (props) => {
+  console.log('colors:', props.colors)
+  console.log('cellSize:', props.cellSize)
+  console.log('rows:', props.rows)
+  console.log('columns:', props.columns)
+  console.log('table:', props.table.join(''))
+  console.log('palette:', props.palette.join(','))
+}
+
+const updateFormFromAutomatonProps = (props) => {
+  document.querySelector('#colors').value = props.colors
+  document.querySelector('#cell-size').value = props.cellSize
+  document.querySelector('#rows').value = props.rows
+  document.querySelector('#columns').value = props.columns
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  generateAutomatonFromUrlParams()
-
-  console.log('colors:', colors)
-  console.log('rows:', rows)
-  console.log('columns:', columns)
-  console.log('cellSize:', cellSize)
-  console.log('table:', table.join(''))
-  console.log('palette:', palette.join(','))
+  const automatonProps = generateAutomatonFromUrlParams()
+  logAutomatonProps(automatonProps)
+  updateFormFromAutomatonProps(automatonProps)
 
   const sidebar = document.querySelector('.sidebar')
   const toggleButton = document.querySelector('.sidebar__toggle-button')
@@ -87,13 +102,10 @@ window.addEventListener('DOMContentLoaded', () => {
     toggleButton.classList.toggle('sidebar__toggle-button--close')
   }
 
-  document.querySelector('#colors').value = colors
-  document.querySelector('#cell-size').value = cellSize
-  document.querySelector('#rows').value = rows
-  document.querySelector('#columns').value = columns
-
   const generateButton = document.querySelector('#generate-automaton')
   generateButton.addEventListener('click', () => {
-    generateAutomatonFromForm()
+    const automatonProps = generateAutomatonFromForm()
+    logAutomatonProps(automatonProps)
+    updateFormFromAutomatonProps(automatonProps)
   })
 })
