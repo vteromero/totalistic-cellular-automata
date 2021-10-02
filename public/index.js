@@ -3,25 +3,65 @@ import {
   totatlisticCellularAutomatonFunctions
 } from './lib.js'
 
-const DEFAULT_COLORS      = 4
-const DEFAULT_ROWS        = 150
-const DEFAULT_COLUMNS     = 150
-const DEFAULT_CELL_SIZE   = 5
+const COLORS_MIN          = 2
+const COLORS_MAX          = 10
+const COLORS_DEFAULT      = 4
+const ROWS_MIN            = 10
+const ROWS_MAX            = 1000
+const ROWS_DEFAULT        = 150
+const COLUMNS_MIN         = 10
+const COLUMNS_MAX         = 1000
+const COLUMNS_DEFAULT     = 150
+const CELL_SIZE_MIN       = 1
+const CELL_SIZE_MAX       = 20
+const CELL_SIZE_DEFAULT   = 5
 
-const parseColorsParam = (colors) => (
-  Number(colors) || DEFAULT_COLORS
+const parseColorsParam = (colors) => {
+  const n = parseInt(colors)
+
+  if (Number.isNaN(n)) return COLORS_DEFAULT
+  if (n < COLORS_MIN) return COLORS_MIN
+  if (n > COLORS_MAX) return COLORS_MAX
+
+  return n
+}
+
+const parseCellSizeParam = (cellSize) => {
+  const n = parseInt(cellSize)
+
+  if (Number.isNaN(n)) return CELL_SIZE_DEFAULT
+  if (n < CELL_SIZE_MIN) return CELL_SIZE_MIN
+  if (n > CELL_SIZE_MAX) return CELL_SIZE_MAX
+
+  return n
+}
+
+const parseRowsParam = (rows) => {
+  const n = parseInt(rows)
+
+  if (Number.isNaN(n)) return ROWS_DEFAULT
+  if (n < ROWS_MIN) return ROWS_MIN
+  if (n > ROWS_MAX) return ROWS_MAX
+
+  return n
+}
+
+const parseColumnsParam = (columns) => {
+  const n = parseInt(columns)
+
+  if (Number.isNaN(n)) return COLUMNS_DEFAULT
+  if (n < COLUMNS_MIN) return COLUMNS_MIN
+  if (n > COLUMNS_MAX) return COLUMNS_MAX
+
+  return n
+}
+
+const parseTableParam = (table, automatonFuncs) => (
+  automatonFuncs.tableStrToArray(table) || automatonFuncs.randomBalancedTable()
 )
 
-const parseRowsParam = (rows) => (
-  Number(rows) || DEFAULT_ROWS
-)
-
-const parseColumnsParam = (columns) => (
-  Number(columns) || DEFAULT_COLUMNS
-)
-
-const parseCellSizeParam = (cellSize) => (
-  Number(cellSize) || DEFAULT_CELL_SIZE
+const parsePaletteParam = (palette, automatonFuncs) => (
+  automatonFuncs.paletteStrToArray(palette) || automatonFuncs.randomPalette()
 )
 
 const generateAutomatonFromUrlParams = () => {
@@ -33,8 +73,8 @@ const generateAutomatonFromUrlParams = () => {
   const cellSize = parseCellSizeParam(urlParams.get('cellSize'))
   const rows = parseRowsParam(urlParams.get('rows'))
   const columns = parseColumnsParam(urlParams.get('columns'))
-  const table = automatonFuncs.tableStrToArray(urlParams.get('table')) || automatonFuncs.randomBalancedTable()
-  const palette = automatonFuncs.paletteStrToArray(urlParams.get('palette')) || automatonFuncs.randomPalette()
+  const table = parseTableParam(urlParams.get('table'), automatonFuncs)
+  const palette = parsePaletteParam(urlParams.get('palette'), automatonFuncs)
 
   const firstRow = automatonFuncs.randomRow(columns)
   const grid = automatonFuncs.createGrid(rows, table, firstRow)
