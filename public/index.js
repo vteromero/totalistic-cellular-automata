@@ -56,9 +56,15 @@ const parseColumnsParam = (columns) => {
   return n
 }
 
-const parseTableParam = (table, automatonFuncs) => (
-  automatonFuncs.tableStrToArray(table) || automatonFuncs.randomBalancedTable()
-)
+const parseTableParam = (table, automatonFuncs) => {
+  const tableArray = automatonFuncs.tableStrToArray(table)
+
+  if (tableArray) {
+    return [tableArray, false]
+  } else {
+    return [automatonFuncs.randomBalancedTable(), true]
+  }
+}
 
 const parsePaletteParam = (palette, automatonFuncs) => (
   automatonFuncs.paletteStrToArray(palette) || automatonFuncs.randomPalette()
@@ -73,7 +79,7 @@ const generateAutomatonFromUrlParams = () => {
   const cellSize = parseCellSizeParam(urlParams.get('cellSize'))
   const rows = parseRowsParam(urlParams.get('rows'))
   const columns = parseColumnsParam(urlParams.get('columns'))
-  const table = parseTableParam(urlParams.get('table'), automatonFuncs)
+  const [table, isRandomTable] = parseTableParam(urlParams.get('table'), automatonFuncs)
   const palette = parsePaletteParam(urlParams.get('palette'), automatonFuncs)
 
   const firstRow = automatonFuncs.randomRow(columns)
@@ -87,7 +93,7 @@ const generateAutomatonFromUrlParams = () => {
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 
-  return { colors, cellSize, rows, columns, table, palette }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette }
 }
 
 const generateAutomatonFromForm = () => {
@@ -97,7 +103,11 @@ const generateAutomatonFromForm = () => {
   const cellSize = parseCellSizeParam(document.querySelector('#cell-size').value)
   const rows = parseRowsParam(document.querySelector('#rows').value)
   const columns = parseColumnsParam(document.querySelector('#columns').value)
-  const table = parseTableParam(document.querySelector('#table').value, automatonFuncs)
+
+  const randomTableChecked = document.querySelector('#random-table').checked
+  const tableStr = randomTableChecked ? '' : document.querySelector('#table').value
+  const [table, isRandomTable] = parseTableParam(tableStr, automatonFuncs)
+
   const palette = automatonFuncs.randomPalette()
 
   const firstRow = automatonFuncs.randomRow(columns)
@@ -111,7 +121,7 @@ const generateAutomatonFromForm = () => {
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 
-  return { colors, cellSize, rows, columns, table, palette }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette }
 }
 
 const logAutomatonProps = (props) => {
@@ -129,6 +139,33 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#rows').value = props.rows
   document.querySelector('#columns').value = props.columns
   document.querySelector('#table').value = props.table.join('')
+  document.querySelector('#table').disabled = props.isRandomTable
+  document.querySelector('#random-table').checked = props.isRandomTable
+}
+
+const addSidebarToggleButtonClickHandler = () => {
+  const sidebar = document.querySelector('.sidebar')
+  const toggleButton = document.querySelector('.sidebar__toggle-button')
+
+  toggleButton.onclick = function () {
+    sidebar.classList.toggle('sidebar--large')
+    toggleButton.classList.toggle('sidebar__toggle-button--close')
+  }
+}
+
+const addRandomTableCheckboxChangeHandler = () => {
+  document.querySelector('#random-table').addEventListener('change', event => {
+    document.querySelector('#table').disabled = event.target.checked
+  })
+}
+
+const addGenerateAutomatonButtonClickHandler = () => {
+  document.querySelector('#generate-automaton').addEventListener('click', () => {
+    const automatonProps = generateAutomatonFromForm()
+
+    logAutomatonProps(automatonProps)
+    updateFormFromAutomatonProps(automatonProps)
+  })
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -136,17 +173,7 @@ window.addEventListener('DOMContentLoaded', () => {
   logAutomatonProps(automatonProps)
   updateFormFromAutomatonProps(automatonProps)
 
-  const sidebar = document.querySelector('.sidebar')
-  const toggleButton = document.querySelector('.sidebar__toggle-button')
-  toggleButton.onclick = function () {
-    sidebar.classList.toggle('sidebar--large')
-    toggleButton.classList.toggle('sidebar__toggle-button--close')
-  }
-
-  const generateButton = document.querySelector('#generate-automaton')
-  generateButton.addEventListener('click', () => {
-    const automatonProps = generateAutomatonFromForm()
-    logAutomatonProps(automatonProps)
-    updateFormFromAutomatonProps(automatonProps)
-  })
+  addSidebarToggleButtonClickHandler()
+  addRandomTableCheckboxChangeHandler()
+  addGenerateAutomatonButtonClickHandler()
 })
