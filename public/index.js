@@ -16,45 +16,31 @@ const CELL_SIZE_MIN       = 1
 const CELL_SIZE_MAX       = 20
 const CELL_SIZE_DEFAULT   = 5
 
-const parseColorsParam = (colors) => {
-  const n = parseInt(colors)
+const parseIntParam = (value, min, max, deflt) => {
+  const n = parseInt(value)
 
-  if (Number.isNaN(n)) return COLORS_DEFAULT
-  if (n < COLORS_MIN) return COLORS_MIN
-  if (n > COLORS_MAX) return COLORS_MAX
-
-  return n
-}
-
-const parseCellSizeParam = (cellSize) => {
-  const n = parseInt(cellSize)
-
-  if (Number.isNaN(n)) return CELL_SIZE_DEFAULT
-  if (n < CELL_SIZE_MIN) return CELL_SIZE_MIN
-  if (n > CELL_SIZE_MAX) return CELL_SIZE_MAX
+  if (Number.isNaN(n)) return deflt
+  if (n < min) return min
+  if (n > max) return max
 
   return n
 }
 
-const parseRowsParam = (rows) => {
-  const n = parseInt(rows)
+const parseColorsParam = (colors) => (
+  parseIntParam(colors, COLORS_MIN, COLORS_MAX, COLORS_DEFAULT)
+)
 
-  if (Number.isNaN(n)) return ROWS_DEFAULT
-  if (n < ROWS_MIN) return ROWS_MIN
-  if (n > ROWS_MAX) return ROWS_MAX
+const parseCellSizeParam = (cellSize) => (
+  parseIntParam(cellSize, CELL_SIZE_MIN, CELL_SIZE_MAX, CELL_SIZE_DEFAULT)
+)
 
-  return n
-}
+const parseRowsParam = (rows) => (
+  parseIntParam(rows, ROWS_MIN, ROWS_MAX, ROWS_DEFAULT)
+)
 
-const parseColumnsParam = (columns) => {
-  const n = parseInt(columns)
-
-  if (Number.isNaN(n)) return COLUMNS_DEFAULT
-  if (n < COLUMNS_MIN) return COLUMNS_MIN
-  if (n > COLUMNS_MAX) return COLUMNS_MAX
-
-  return n
-}
+const parseColumnsParam = (columns) => (
+  parseIntParam(columns, COLUMNS_MIN, COLUMNS_MAX, COLUMNS_DEFAULT)
+)
 
 const parseTableParam = (table, automatonFuncs) => {
   const tableArray = automatonFuncs.tableStrToArray(table)
