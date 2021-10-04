@@ -97,7 +97,7 @@ const generateAutomatonFromForm = () => {
   const cellSize = parseCellSizeParam(document.querySelector('#cell-size').value)
   const rows = parseRowsParam(document.querySelector('#rows').value)
   const columns = parseColumnsParam(document.querySelector('#columns').value)
-  const table = automatonFuncs.randomBalancedTable()
+  const table = parseTableParam(document.querySelector('#table').value, automatonFuncs)
   const palette = automatonFuncs.randomPalette()
 
   const firstRow = automatonFuncs.randomRow(columns)
@@ -128,6 +128,7 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#cell-size').value = props.cellSize
   document.querySelector('#rows').value = props.rows
   document.querySelector('#columns').value = props.columns
+  document.querySelector('#table').value = props.table.join('')
 }
 
 window.addEventListener('DOMContentLoaded', () => {
