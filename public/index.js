@@ -56,6 +56,26 @@ const parsePaletteParam = (palette, automatonFuncs) => (
   automatonFuncs.paletteStrToArray(palette) || automatonFuncs.randomPalette()
 )
 
+const addPaletteColorInputs = (palette) => {
+  const colorsInputs = palette.map(paletteColor => {
+    const input = document.createElement('input')
+    input.setAttribute('type', 'color')
+    input.setAttribute('class', 'sidebar__color-input')
+    input.setAttribute('value', paletteColor)
+
+    return input
+  })
+
+  document.querySelector('#palette-container').replaceChildren(...colorsInputs)
+}
+
+const getPaletteStrFromColorInputs = () => {
+  const colorInputs = document.querySelectorAll('.sidebar__color-input')
+  const palette = [ ...colorInputs ].map(input => (input.value))
+
+  return palette.map(colorHex => (colorHex.substring(1))).join(',')
+}
+
 const generateAutomatonFromUrlParams = () => {
   const urlParams = new URLSearchParams(window.location.search)
 
@@ -94,7 +114,8 @@ const generateAutomatonFromForm = () => {
   const tableStr = randomTableChecked ? '' : document.querySelector('#table').value
   const [table, isRandomTable] = parseTableParam(tableStr, automatonFuncs)
 
-  const palette = automatonFuncs.randomPalette()
+  const paletteStr = getPaletteStrFromColorInputs()
+  const palette = parsePaletteParam(paletteStr, automatonFuncs)
 
   const firstRow = automatonFuncs.randomRow(columns)
   const grid = automatonFuncs.createGrid(rows, table, firstRow)
@@ -117,19 +138,6 @@ const logAutomatonProps = (props) => {
   console.log('columns:', props.columns)
   console.log('table:', props.table.join(''))
   console.log('palette:', props.palette.join(','))
-}
-
-const addPaletteColorInputs = (palette) => {
-  const colorsInputs = palette.map(paletteColor => {
-    const input = document.createElement('input')
-    input.setAttribute('type', 'color')
-    input.setAttribute('class', 'sidebar__color-input')
-    input.setAttribute('value', paletteColor)
-
-    return input
-  })
-
-  document.querySelector('#palette-container').replaceChildren(...colorsInputs)
 }
 
 const updateFormFromAutomatonProps = (props) => {
