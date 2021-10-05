@@ -119,6 +119,19 @@ const logAutomatonProps = (props) => {
   console.log('palette:', props.palette.join(','))
 }
 
+const addPaletteColorInputs = (palette) => {
+  const colorsInputs = palette.map(paletteColor => {
+    const input = document.createElement('input')
+    input.setAttribute('type', 'color')
+    input.setAttribute('class', 'sidebar__color-input')
+    input.setAttribute('value', paletteColor)
+
+    return input
+  })
+
+  document.querySelector('#palette-container').replaceChildren(...colorsInputs)
+}
+
 const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#colors').value = props.colors
   document.querySelector('#cell-size').value = props.cellSize
@@ -127,6 +140,7 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#table').value = props.table.join('')
   document.querySelector('#table').disabled = props.isRandomTable
   document.querySelector('#random-table').checked = props.isRandomTable
+  addPaletteColorInputs(props.palette)
 }
 
 const addSidebarToggleButtonClickHandler = () => {
