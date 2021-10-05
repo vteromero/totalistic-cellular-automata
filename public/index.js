@@ -75,6 +75,12 @@ const addPaletteColorInputs = (palette) => {
   document.querySelector('#palette-container').replaceChildren(...colorsInputs)
 }
 
+const disablePaletteColorInputs = (disabled) => {
+  document.querySelectorAll('.sidebar__color-input').forEach(input => (
+    input.disabled = disabled
+  ))
+}
+
 const getPaletteStrFromColorInputs = () => {
   const colorInputs = document.querySelectorAll('.sidebar__color-input')
   const palette = [ ...colorInputs ].map(input => (input.value))
@@ -157,6 +163,7 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#random-table').checked = props.isRandomTable
   document.querySelector('#random-palette').checked = props.isRandomPalette
   addPaletteColorInputs(props.palette)
+  disablePaletteColorInputs(props.isRandomPalette)
 }
 
 const addSidebarToggleButtonClickHandler = () => {
@@ -172,6 +179,12 @@ const addSidebarToggleButtonClickHandler = () => {
 const addRandomTableCheckboxChangeHandler = () => {
   document.querySelector('#random-table').addEventListener('change', event => {
     document.querySelector('#table').disabled = event.target.checked
+  })
+}
+
+const addRandomPaletteCheckboxChangeHandler = () => {
+  document.querySelector('#random-palette').addEventListener('change', event => {
+    disablePaletteColorInputs(event.target.checked)
   })
 }
 
@@ -191,5 +204,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   addSidebarToggleButtonClickHandler()
   addRandomTableCheckboxChangeHandler()
+  addRandomPaletteCheckboxChangeHandler()
   addGenerateAutomatonButtonClickHandler()
 })
