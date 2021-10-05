@@ -52,9 +52,15 @@ const parseTableParam = (table, automatonFuncs) => {
   }
 }
 
-const parsePaletteParam = (palette, automatonFuncs) => (
-  automatonFuncs.paletteStrToArray(palette) || automatonFuncs.randomPalette()
-)
+const parsePaletteParam = (palette, automatonFuncs) => {
+  const paletteArray = automatonFuncs.paletteStrToArray(palette)
+
+  if (paletteArray) {
+    return [paletteArray, false]
+  } else {
+    return [automatonFuncs.randomPalette(), true]
+  }
+}
 
 const addPaletteColorInputs = (palette) => {
   const colorsInputs = palette.map(paletteColor => {
@@ -86,7 +92,7 @@ const generateAutomatonFromUrlParams = () => {
   const rows = parseRowsParam(urlParams.get('rows'))
   const columns = parseColumnsParam(urlParams.get('columns'))
   const [table, isRandomTable] = parseTableParam(urlParams.get('table'), automatonFuncs)
-  const palette = parsePaletteParam(urlParams.get('palette'), automatonFuncs)
+  const [palette, isRandomPalette] = parsePaletteParam(urlParams.get('palette'), automatonFuncs)
 
   const firstRow = automatonFuncs.randomRow(columns)
   const grid = automatonFuncs.createGrid(rows, table, firstRow)
@@ -99,7 +105,7 @@ const generateAutomatonFromUrlParams = () => {
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 
-  return { colors, cellSize, rows, columns, table, isRandomTable, palette }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette }
 }
 
 const generateAutomatonFromForm = () => {
@@ -114,8 +120,9 @@ const generateAutomatonFromForm = () => {
   const tableStr = randomTableChecked ? '' : document.querySelector('#table').value
   const [table, isRandomTable] = parseTableParam(tableStr, automatonFuncs)
 
-  const paletteStr = getPaletteStrFromColorInputs()
-  const palette = parsePaletteParam(paletteStr, automatonFuncs)
+  const randomPaletteChecked = document.querySelector('#random-palette').checked
+  const paletteStr = randomPaletteChecked ? '' : getPaletteStrFromColorInputs()
+  const [palette, isRandomPalette] = parsePaletteParam(paletteStr, automatonFuncs)
 
   const firstRow = automatonFuncs.randomRow(columns)
   const grid = automatonFuncs.createGrid(rows, table, firstRow)
@@ -128,7 +135,7 @@ const generateAutomatonFromForm = () => {
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 
-  return { colors, cellSize, rows, columns, table, isRandomTable, palette }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette }
 }
 
 const logAutomatonProps = (props) => {
@@ -148,6 +155,7 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#table').value = props.table.join('')
   document.querySelector('#table').disabled = props.isRandomTable
   document.querySelector('#random-table').checked = props.isRandomTable
+  document.querySelector('#random-palette').checked = props.isRandomPalette
   addPaletteColorInputs(props.palette)
 }
 
