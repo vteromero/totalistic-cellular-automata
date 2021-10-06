@@ -62,6 +62,16 @@ const parsePaletteParam = (palette, automatonFuncs) => {
   }
 }
 
+const parseFirstRowParam = (firstRow, columns, automatonFuncs) => {
+  const firstRowArray = automatonFuncs.rowStrToArray(firstRow)
+
+  if (firstRowArray && firstRowArray.length === columns) {
+    return firstRowArray
+  } else {
+    return automatonFuncs.randomRow(columns)
+  }
+}
+
 const addPaletteColorInputs = (palette) => {
   const colorsInputs = palette.map(paletteColor => {
     const input = document.createElement('input')
@@ -99,8 +109,8 @@ const generateAutomatonFromUrlParams = () => {
   const columns = parseColumnsParam(urlParams.get('columns'))
   const [table, isRandomTable] = parseTableParam(urlParams.get('table'), automatonFuncs)
   const [palette, isRandomPalette] = parsePaletteParam(urlParams.get('palette'), automatonFuncs)
+  const firstRow = parseFirstRowParam(urlParams.get('firstRow'), columns, automatonFuncs)
 
-  const firstRow = automatonFuncs.randomRow(columns)
   const grid = automatonFuncs.createGrid(rows, table, firstRow)
 
   const canvas = document.getElementById('canvas')
@@ -111,7 +121,7 @@ const generateAutomatonFromUrlParams = () => {
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 
-  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette, firstRow }
 }
 
 const generateAutomatonFromForm = () => {
@@ -141,7 +151,7 @@ const generateAutomatonFromForm = () => {
 
   automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
 
-  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette, firstRow }
 }
 
 const logAutomatonProps = (props) => {
@@ -151,6 +161,7 @@ const logAutomatonProps = (props) => {
   console.log('columns:', props.columns)
   console.log('table:', props.table.join(''))
   console.log('palette:', props.palette.join(','))
+  console.log('firstRow:', props.firstRow.join(''))
 }
 
 const updateFormFromAutomatonProps = (props) => {
@@ -164,6 +175,7 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#random-palette').checked = props.isRandomPalette
   addPaletteColorInputs(props.palette)
   disablePaletteColorInputs(props.isRandomPalette)
+  document.querySelector('#first-row').value = props.firstRow.join('')
 }
 
 const addSidebarToggleButtonClickHandler = () => {

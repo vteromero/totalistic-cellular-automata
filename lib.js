@@ -86,6 +86,18 @@ const randomPalette = (colors) => () => (
   Array.from({length: colors}, () => randomPaletteColor())
 )
 
+const rowStrRegexp = (colors) => (
+  new RegExp(`^[0-${maxState(colors)}]+$`)
+)
+
+const rowStrToArray = (colors) => (str) => {
+  const re = rowStrRegexp(colors)
+
+  if (!re.test(str)) return null
+
+  return str.split('').map(c => Number(c))
+}
+
 const randomRow = (colors) => (len) => (
   Array.from({length: len}, () => getRandomInt(0, colors))
 )
@@ -135,6 +147,7 @@ export const totatlisticCellularAutomatonFunctions = (colors) => (
     randomBalancedTable: randomBalancedTable(colors),
     paletteStrToArray: paletteStrToArray(colors),
     randomPalette: randomPalette(colors),
+    rowStrToArray: rowStrToArray(colors),
     randomRow: randomRow(colors),
     createGrid: createGrid,
     drawGrid: drawGrid
