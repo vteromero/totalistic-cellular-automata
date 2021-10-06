@@ -12,46 +12,52 @@
       <button class="sidebar__toggle-button">&gt;</button>
 
       <div class="sidebar__content">
-        <div class="sidebar__row">
-          <label for="colors" title="Number of colors (allowed: 2-10; default: 4)" class="sidebar__label sidebar__label--with-help">Colors:</label>
-          <input type="text" name="colors" id="colors" class="sidebar__text-input" />
-        </div>
+        <div class="sidebar__form">
+          <div class="sidebar__row sidebar__row--with-cols">
+            <div class="sidebar__col">
+              <label for="colors" title="Number of colors (allowed: 2-10; default: 4)" class="sidebar__label sidebar__label--with-help">Colors:</label>
+              <input type="text" name="colors" id="colors" class="sidebar__text-input" />
+            </div>
 
-        <div class="sidebar__row">
-          <label for="cell-size" title="Size of a cell in pixels (allowed: 1-20; default: 5)" class="sidebar__label sidebar__label--with-help">Cell Size:</label>
-          <input type="text" name="cell-size" id="cell-size" class="sidebar__text-input" />
-        </div>
-
-        <div class="sidebar__row">
-          <label for="rows" title="Number of rows (allowed: 10-1000; default: 150)" class="sidebar__label sidebar__label--with-help">Rows:</label>
-          <input type="text" name="rows" id="rows" class="sidebar__text-input" />
-        </div>
-
-        <div class="sidebar__row">
-          <label for="columns" title="Number of columns (allowed: 10-1000; default: 150)" class="sidebar__label sidebar__label--with-help">Columns:</label>
-          <input type="text" name="columns" id="columns" class="sidebar__text-input" />
-        </div>
-
-        <div class="sidebar__row">
-          <label for="table" class="sidebar__label sidebar__label--with-help">Table:</label>
-          <input type="text" name="table" id="table" class="sidebar__text-input" />
-          <div>
-            <input type="checkbox" name="random-table" id="random-table" />
-            <label for="random-table" class="sidebar__label">Random table</label>
+            <div class="sidebar__col">
+              <label for="cell-size" title="Size of a cell in pixels (allowed: 1-20; default: 5)" class="sidebar__label sidebar__label--with-help">Cell Size:</label>
+              <input type="text" name="cell-size" id="cell-size" class="sidebar__text-input" />
+            </div>
           </div>
-        </div>
 
-        <div class="sidebar__row">
-          <label class="sidebar__label sidebar__label--with-help">Palette:</label>
-          <div id="palette-container" class="sidebar__palette-container"></div>
-          <div>
-            <input type="checkbox" name="random-palette" id="random-palette" />
-            <label for="random-palette" class="sidebar__label">Random palette</label>
+          <div class="sidebar__row sidebar__row--with-cols">
+            <div class="sidebar__col">
+              <label for="rows" title="Number of rows (allowed: 10-1000; default: 150)" class="sidebar__label sidebar__label--with-help">Rows:</label>
+              <input type="text" name="rows" id="rows" class="sidebar__text-input" />
+            </div>
+
+            <div class="sidebar__col">
+              <label for="columns" title="Number of columns (allowed: 10-1000; default: 150)" class="sidebar__label sidebar__label--with-help">Columns:</label>
+              <input type="text" name="columns" id="columns" class="sidebar__text-input" />
+            </div>
           </div>
-        </div>
 
-        <div class="sidebar__row">
-          <button id="generate-automaton" class="sidebar__button">Generate Automaton</button>
+          <div class="sidebar__col">
+            <label for="table" class="sidebar__label sidebar__label--with-help">Table:</label>
+            <input type="text" name="table" id="table" class="sidebar__text-input" />
+            <div>
+              <input type="checkbox" name="random-table" id="random-table" />
+              <label for="random-table" class="sidebar__label">Random table</label>
+            </div>
+          </div>
+
+          <div class="sidebar__col">
+            <label class="sidebar__label sidebar__label--with-help">Palette:</label>
+            <div id="palette-container" class="sidebar__palette-container"></div>
+            <div>
+              <input type="checkbox" name="random-palette" id="random-palette" />
+              <label for="random-palette" class="sidebar__label">Random palette</label>
+            </div>
+          </div>
+
+          <div class="sidebar__row">
+            <button id="generate-automaton" class="sidebar__button">Generate Automaton</button>
+          </div>
         </div>
       </div>
     </div>

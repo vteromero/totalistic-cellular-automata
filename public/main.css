@@ -47,11 +47,26 @@ body {
   overflow: hidden;
 }
 
+.sidebar__form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  row-gap: 2rem;
+}
+
 .sidebar__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar__row--with-cols {
+  column-gap: 1rem;
+}
+
+.sidebar__col {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  margin: 2rem 3rem 0rem 2rem;
 }
 
 .sidebar__label {
@@ -79,12 +94,6 @@ body {
 
 .sidebar__text-input:disabled {
   border-color: #ccc;
-}
-
-.sidebar__desc {
-  color: #b0b0b0;
-  font-size: 12px;
-  white-space: nowrap;
 }
 
 .sidebar__button {
