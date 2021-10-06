@@ -86,8 +86,17 @@ body {
   background-color: #13adbd;
   border: none;
   color: #000066;
+  font-size: 1.1rem;
   padding: 1rem 2rem;
   white-space: nowrap;
+}
+
+.sidebar__button:hover {
+  background-color: #2fd8ea;
+}
+
+.sidebar__button:active {
+  background-color: #13adbd;
 }
 
 .sidebar__palette-container {
