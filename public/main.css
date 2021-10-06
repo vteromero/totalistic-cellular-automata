@@ -59,7 +59,7 @@ body {
 }
 
 .sidebar__text-input {
-  border: 3px solid #ccc;
+  border: 3px solid #858585;
   box-sizing: border-box;
   margin: 0.5rem 0;
   outline: none;
@@ -70,6 +70,10 @@ body {
 
 .sidebar__text-input:focus {
   border-color: #000066;
+}
+
+.sidebar__text-input:disabled {
+  border-color: #ccc;
 }
 
 .sidebar__desc {
