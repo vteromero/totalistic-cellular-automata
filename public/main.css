@@ -48,6 +48,7 @@ body {
 }
 
 .sidebar__row {
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   margin: 2rem 3rem 0rem 2rem;
@@ -56,6 +57,10 @@ body {
 .sidebar__label {
   color: #c0c0c0;
   white-space: nowrap;
+}
+
+.sidebar__label--with-help {
+  border-bottom: 1px dotted #c0c0c0;
 }
 
 .sidebar__text-input {
@@ -89,6 +94,7 @@ body {
   font-size: 1.1rem;
   padding: 1rem 2rem;
   white-space: nowrap;
+  width: 100%;
 }
 
 .sidebar__button:hover {

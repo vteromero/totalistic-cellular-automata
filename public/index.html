@@ -13,31 +13,27 @@
 
       <div class="sidebar__content">
         <div class="sidebar__row">
-          <label for="colors" class="sidebar__label">Colors:</label>
+          <label for="colors" title="Number of colors (allowed: 2-10; default: 4)" class="sidebar__label sidebar__label--with-help">Colors:</label>
           <input type="text" name="colors" id="colors" class="sidebar__text-input" />
-          <div class="sidebar__desc">Number of colors (allowed: 2-10; default: 4)</div>
         </div>
 
         <div class="sidebar__row">
-          <label for="cell-size" class="sidebar__label">Cell Size:</label>
+          <label for="cell-size" title="Size of a cell in pixels (allowed: 1-20; default: 5)" class="sidebar__label sidebar__label--with-help">Cell Size:</label>
           <input type="text" name="cell-size" id="cell-size" class="sidebar__text-input" />
-          <div class="sidebar__desc">Size of a cell in pixels (allowed: 1-20; default: 5)</div>
         </div>
 
         <div class="sidebar__row">
-          <label for="rows" class="sidebar__label">Rows:</label>
+          <label for="rows" title="Number of rows (allowed: 10-1000; default: 150)" class="sidebar__label sidebar__label--with-help">Rows:</label>
           <input type="text" name="rows" id="rows" class="sidebar__text-input" />
-          <div class="sidebar__desc">Number of rows (allowed: 10-1000; default: 150)</div>
         </div>
 
         <div class="sidebar__row">
-          <label for="columns" class="sidebar__label">Columns:</label>
+          <label for="columns" title="Number of columns (allowed: 10-1000; default: 150)" class="sidebar__label sidebar__label--with-help">Columns:</label>
           <input type="text" name="columns" id="columns" class="sidebar__text-input" />
-          <div class="sidebar__desc">Number of columns (allowed: 10-1000; default: 150)</div>
         </div>
 
         <div class="sidebar__row">
-          <label for="table" class="sidebar__label">Table:</label>
+          <label for="table" class="sidebar__label sidebar__label--with-help">Table:</label>
           <input type="text" name="table" id="table" class="sidebar__text-input" />
           <div>
             <input type="checkbox" name="random-table" id="random-table" />
@@ -46,7 +42,7 @@
         </div>
 
         <div class="sidebar__row">
-          <label class="sidebar__label">Palette:</label>
+          <label class="sidebar__label sidebar__label--with-help">Palette:</label>
           <div id="palette-container" class="sidebar__palette-container"></div>
           <div>
             <input type="checkbox" name="random-palette" id="random-palette" />
