@@ -55,12 +55,9 @@ body {
 }
 
 .sidebar__row {
+  column-gap: 1rem;
   display: flex;
   flex-direction: row;
-}
-
-.sidebar__row--with-cols {
-  column-gap: 1rem;
 }
 
 .sidebar__col {
