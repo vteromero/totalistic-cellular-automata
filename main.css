@@ -48,9 +48,11 @@ body {
 }
 
 .sidebar__form {
+  border-bottom: 1px dotted #c0c0c0;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  margin: 0 2rem;
+  padding: 2rem 0;
   row-gap: 2rem;
 }
 
@@ -72,7 +74,7 @@ body {
 }
 
 .sidebar__label--with-help {
-  border-bottom: 1px dotted #c0c0c0;
+  text-decoration: underline dotted;
 }
 
 .sidebar__text-input {
@@ -120,6 +122,14 @@ body {
 
 .sidebar__color-input {
   margin: 0.5rem;
+}
+
+.sidebar__permalink-container {
+  margin: 2rem;
+}
+
+.sidebar__permalink {
+  color: #e0e0e0;
 }
 
 .canvas-container {

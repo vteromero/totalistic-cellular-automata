@@ -1,6 +1,7 @@
 import {
   resizeCanvas,
-  totatlisticCellularAutomatonFunctions
+  totatlisticCellularAutomatonFunctions,
+  automatonPermalinkURL
 } from './lib.js'
 
 const COLORS_MIN          = 2
@@ -165,6 +166,7 @@ const logAutomatonProps = (props) => {
   console.log('table:', props.funcs.tableArrayToStr(props.table))
   console.log('palette:', props.funcs.paletteArrayToStr(props.palette))
   console.log('firstRow:', props.funcs.rowArrayToStr(props.firstRow))
+  console.log('permalink URL:', automatonPermalinkURL(document.location.href, props))
 }
 
 const updateFormFromAutomatonProps = (props) => {
@@ -179,6 +181,12 @@ const updateFormFromAutomatonProps = (props) => {
   addPaletteColorInputs(props.palette)
   disablePaletteColorInputs(props.isRandomPalette)
   document.querySelector('#first-row').value = props.funcs.rowArrayToStr(props.firstRow)
+}
+
+const updatePermalink = (props) => {
+  const permalink = document.querySelector('#permalink')
+
+  permalink.setAttribute('href', automatonPermalinkURL(document.location.href, props).href)
 }
 
 const addSidebarToggleButtonClickHandler = () => {
@@ -209,6 +217,7 @@ const addGenerateAutomatonButtonClickHandler = () => {
 
     logAutomatonProps(automatonProps)
     updateFormFromAutomatonProps(automatonProps)
+    updatePermalink(automatonProps)
   })
 }
 
@@ -216,6 +225,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const automatonProps = generateAutomatonFromUrlParams()
   logAutomatonProps(automatonProps)
   updateFormFromAutomatonProps(automatonProps)
+  updatePermalink(automatonProps)
 
   addSidebarToggleButtonClickHandler()
   addRandomTableCheckboxChangeHandler()
