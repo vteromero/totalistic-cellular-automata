@@ -169,7 +169,7 @@ const logAutomatonProps = (props) => {
   console.log('permalink URL:', automatonPermalinkURL(document.location.href, props))
 }
 
-const updateFormFromAutomatonProps = (props) => {
+const updateForm = (props) => {
   document.querySelector('#colors').value = props.colors
   document.querySelector('#cell-size').value = props.cellSize
   document.querySelector('#rows').value = props.rows
@@ -216,7 +216,7 @@ const addGenerateAutomatonButtonClickHandler = () => {
     const automatonProps = generateAutomatonFromForm()
 
     logAutomatonProps(automatonProps)
-    updateFormFromAutomatonProps(automatonProps)
+    updateForm(automatonProps)
     updatePermalink(automatonProps)
   })
 }
@@ -224,7 +224,7 @@ const addGenerateAutomatonButtonClickHandler = () => {
 window.addEventListener('DOMContentLoaded', () => {
   const automatonProps = generateAutomatonFromUrlParams()
   logAutomatonProps(automatonProps)
-  updateFormFromAutomatonProps(automatonProps)
+  updateForm(automatonProps)
   updatePermalink(automatonProps)
 
   addSidebarToggleButtonClickHandler()
