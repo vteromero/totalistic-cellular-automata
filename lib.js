@@ -169,3 +169,21 @@ export const resizeCanvas = (canvas, width, height) => {
   canvas.width = width
   canvas.height = height
 }
+
+export const automatonPermalinkURL = (baseUrl, props) => {
+  let url = new URL(baseUrl)
+  let searchParams = new URLSearchParams()
+
+  searchParams.set('colors', props.colors)
+  searchParams.set('cellSize', props.cellSize)
+  searchParams.set('rows', props.rows)
+  searchParams.set('columns', props.columns)
+  searchParams.set('table', props.funcs.tableArrayToStr(props.table))
+  searchParams.set('palette', props.funcs.paletteArrayToStr(props.palette))
+  searchParams.set('firstRow', props.funcs.rowArrayToStr(props.firstRow))
+
+  url.search = searchParams.toString()
+  url.hash = ''
+
+  return url
+}
