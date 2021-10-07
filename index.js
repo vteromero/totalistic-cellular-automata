@@ -91,11 +91,10 @@ const disablePaletteColorInputs = (disabled) => {
   ))
 }
 
-const getPaletteStrFromColorInputs = () => {
+const paletteArrayFromColorInputs = () => {
   const colorInputs = document.querySelectorAll('.sidebar__color-input')
-  const palette = [ ...colorInputs ].map(input => (input.value))
 
-  return palette.map(colorHex => (colorHex.substring(1))).join(',')
+  return [ ...colorInputs ].map(input => (input.value))
 }
 
 const automatonPropsFromUrlParams = () => {
@@ -122,7 +121,7 @@ const automatonPropsFromForm = () => {
   const tableStr = randomTableChecked ? '' : document.querySelector('#table').value
   const [table, isRandomTable] = parseTableParam(tableStr, automatonFuncs)
   const randomPaletteChecked = document.querySelector('#random-palette').checked
-  const paletteStr = randomPaletteChecked ? '' : getPaletteStrFromColorInputs()
+  const paletteStr = randomPaletteChecked ? '' : automatonFuncs.paletteArrayToStr(paletteArrayFromColorInputs())
   const [palette, isRandomPalette] = parsePaletteParam(paletteStr, automatonFuncs)
   const firstRow = automatonFuncs.randomRow(columns)
 
@@ -163,9 +162,9 @@ const logAutomatonProps = (props) => {
   console.log('cellSize:', props.cellSize)
   console.log('rows:', props.rows)
   console.log('columns:', props.columns)
-  console.log('table:', props.table.join(''))
-  console.log('palette:', props.palette.join(','))
-  console.log('firstRow:', props.firstRow.join(''))
+  console.log('table:', props.funcs.tableArrayToStr(props.table))
+  console.log('palette:', props.funcs.paletteArrayToStr(props.palette))
+  console.log('firstRow:', props.funcs.rowArrayToStr(props.firstRow))
 }
 
 const updateFormFromAutomatonProps = (props) => {
@@ -173,13 +172,13 @@ const updateFormFromAutomatonProps = (props) => {
   document.querySelector('#cell-size').value = props.cellSize
   document.querySelector('#rows').value = props.rows
   document.querySelector('#columns').value = props.columns
-  document.querySelector('#table').value = props.table.join('')
+  document.querySelector('#table').value = props.funcs.tableArrayToStr(props.table)
   document.querySelector('#table').disabled = props.isRandomTable
   document.querySelector('#random-table').checked = props.isRandomTable
   document.querySelector('#random-palette').checked = props.isRandomPalette
   addPaletteColorInputs(props.palette)
   disablePaletteColorInputs(props.isRandomPalette)
-  document.querySelector('#first-row').value = props.firstRow.join('')
+  document.querySelector('#first-row').value = props.funcs.rowArrayToStr(props.firstRow)
 }
 
 const addSidebarToggleButtonClickHandler = () => {

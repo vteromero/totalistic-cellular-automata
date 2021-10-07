@@ -37,6 +37,8 @@ const tableStrToArray = (colors) => (str) => {
   return str.split('').map(c => Number(c))
 }
 
+const tableArrayToStr = (arr) => arr.join('')
+
 const randomTable = (colors) => () => (
   Array.from({length: totalisticStates(colors)}, () => getRandomIntInclusive(0, maxState(colors)))
 )
@@ -78,6 +80,8 @@ const paletteStrToArray = (colors) => (str) => {
   return str.split(',').map(paletteColor => `#${paletteColor}`)
 }
 
+const paletteArrayToStr = (arr) => arr.map(colorHex => (colorHex.substring(1))).join(',')
+
 const randomPaletteColor = () => (
   '#' + Math.floor(Math.random() * 16777215).toString(16)
 )
@@ -97,6 +101,8 @@ const rowStrToArray = (colors) => (str) => {
 
   return str.split('').map(c => Number(c))
 }
+
+const rowArrayToStr = (arr) => arr.join('')
 
 const randomRow = (colors) => (len) => (
   Array.from({length: len}, () => getRandomInt(0, colors))
@@ -143,11 +149,14 @@ const drawGrid = (canvas, grid, cellSize, palette) => {
 export const totatlisticCellularAutomatonFunctions = (colors) => (
   {
     tableStrToArray: tableStrToArray(colors),
+    tableArrayToStr: tableArrayToStr,
     randomTable: randomTable(colors),
     randomBalancedTable: randomBalancedTable(colors),
     paletteStrToArray: paletteStrToArray(colors),
+    paletteArrayToStr: paletteArrayToStr,
     randomPalette: randomPalette(colors),
     rowStrToArray: rowStrToArray(colors),
+    rowArrayToStr: rowArrayToStr,
     randomRow: randomRow(colors),
     createGrid: createGrid,
     drawGrid: drawGrid
