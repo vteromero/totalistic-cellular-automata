@@ -98,12 +98,10 @@ const getPaletteStrFromColorInputs = () => {
   return palette.map(colorHex => (colorHex.substring(1))).join(',')
 }
 
-const generateAutomatonFromUrlParams = () => {
+const automatonPropsFromUrlParams = () => {
   const urlParams = new URLSearchParams(window.location.search)
-
   const colors = parseColorsParam(urlParams.get('colors'))
   const automatonFuncs = totatlisticCellularAutomatonFunctions(colors)
-
   const cellSize = parseCellSizeParam(urlParams.get('cellSize'))
   const rows = parseRowsParam(urlParams.get('rows'))
   const columns = parseColumnsParam(urlParams.get('columns'))
@@ -111,37 +109,29 @@ const generateAutomatonFromUrlParams = () => {
   const [palette, isRandomPalette] = parsePaletteParam(urlParams.get('palette'), automatonFuncs)
   const firstRow = parseFirstRowParam(urlParams.get('firstRow'), columns, automatonFuncs)
 
-  const grid = automatonFuncs.createGrid(rows, table, firstRow)
-
-  const canvas = document.getElementById('canvas')
-  const width = columns * cellSize
-  const height = rows * cellSize
-
-  resizeCanvas(canvas, width, height)
-
-  automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
-
-  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette, firstRow }
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette, firstRow, funcs: automatonFuncs }
 }
 
-const generateAutomatonFromForm = () => {
+const automatonPropsFromForm = () => {
   const colors = parseColorsParam(document.querySelector('#colors').value)
   const automatonFuncs = totatlisticCellularAutomatonFunctions(colors)
-
   const cellSize = parseCellSizeParam(document.querySelector('#cell-size').value)
   const rows = parseRowsParam(document.querySelector('#rows').value)
   const columns = parseColumnsParam(document.querySelector('#columns').value)
-
   const randomTableChecked = document.querySelector('#random-table').checked
   const tableStr = randomTableChecked ? '' : document.querySelector('#table').value
   const [table, isRandomTable] = parseTableParam(tableStr, automatonFuncs)
-
   const randomPaletteChecked = document.querySelector('#random-palette').checked
   const paletteStr = randomPaletteChecked ? '' : getPaletteStrFromColorInputs()
   const [palette, isRandomPalette] = parsePaletteParam(paletteStr, automatonFuncs)
-
   const firstRow = automatonFuncs.randomRow(columns)
-  const grid = automatonFuncs.createGrid(rows, table, firstRow)
+
+  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette, firstRow, funcs: automatonFuncs }
+}
+
+const generateAutomaton = (props) => {
+  const { cellSize, rows, columns, table, palette, firstRow, funcs } = props
+  const grid = funcs.createGrid(rows, table, firstRow)
 
   const canvas = document.getElementById('canvas')
   const width = columns * cellSize
@@ -149,9 +139,23 @@ const generateAutomatonFromForm = () => {
 
   resizeCanvas(canvas, width, height)
 
-  automatonFuncs.drawGrid(canvas, grid, cellSize, palette)
+  funcs.drawGrid(canvas, grid, cellSize, palette)
+}
 
-  return { colors, cellSize, rows, columns, table, isRandomTable, palette, isRandomPalette, firstRow }
+const generateAutomatonFromUrlParams = () => {
+  const props = automatonPropsFromUrlParams()
+
+  generateAutomaton(props)
+
+  return props
+}
+
+const generateAutomatonFromForm = () => {
+  const props = automatonPropsFromForm()
+
+  generateAutomaton(props)
+
+  return props
 }
 
 const logAutomatonProps = (props) => {
