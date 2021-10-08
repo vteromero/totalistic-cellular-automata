@@ -62,12 +62,14 @@ const randomBalancedTable = (colors) => () => {
   return shuffle(table)
 }
 
+const PALETTE_SEPARATOR = '_'
+
 const paletteColorRegexp = new RegExp('^([0-9]|[a-f]){6}$')
 
 const testPaletteStr = (colors) => (str) => {
   if (str === null) return false
 
-  const paletteColors = str.split(',')
+  const paletteColors = str.split(PALETTE_SEPARATOR)
 
   if (paletteColors.length !== colors) return false
 
@@ -77,10 +79,10 @@ const testPaletteStr = (colors) => (str) => {
 const paletteStrToArray = (colors) => (str) => {
   if (!testPaletteStr(colors)(str)) return null
 
-  return str.split(',').map(paletteColor => `#${paletteColor}`)
+  return str.split(PALETTE_SEPARATOR).map(paletteColor => `#${paletteColor}`)
 }
 
-const paletteArrayToStr = (arr) => arr.map(colorHex => (colorHex.substring(1))).join(',')
+const paletteArrayToStr = (arr) => arr.map(colorHex => (colorHex.substring(1))).join(PALETTE_SEPARATOR)
 
 const randomPaletteColor = () => (
   '#' + Math.floor(Math.random() * 16777215).toString(16)
