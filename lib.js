@@ -84,9 +84,13 @@ const paletteStrToArray = (colors) => (str) => {
 
 const paletteArrayToStr = (arr) => arr.map(colorHex => (colorHex.substring(1))).join(PALETTE_SEPARATOR)
 
-const randomPaletteColor = () => (
-  '#' + Math.floor(Math.random() * 16777215).toString(16)
-)
+const randomPaletteColor = () => {
+  const n = Math.floor(Math.random() * 16777215)
+  const hex = n.toString(16)
+  const paddedHex = hex.padStart(6, '0')
+
+  return '#' + paddedHex
+}
 
 const randomPalette = (colors) => () => (
   Array.from({length: colors}, () => randomPaletteColor())
