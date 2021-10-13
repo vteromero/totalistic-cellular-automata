@@ -113,6 +113,10 @@ body {
   background-color: #13adbd;
 }
 
+.sidebar__button:focus {
+  outline: 3px solid #000066;
+}
+
 .sidebar__palette-container {
   display: flex;
   flex-direction: row;
