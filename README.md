@@ -1,6 +1,6 @@
 A Javascript tool to create [totalistic cellular automata](https://mathworld.wolfram.com/TotalisticCellularAutomaton.html).
 
-## Preview
+## Demo
 
 <p align="center">
   <img width="800" src="assets/demo.gif">
@@ -11,13 +11,13 @@ A Javascript tool to create [totalistic cellular automata](https://mathworld.wol
 First, install the npm dependencies:
 
 ```bash
-$ npm install
+npm install
 ```
 
 Then, run the server:
 
 ```bash
-$ npm run start
+npm run start
 ```
 
 And finally, visit http://localhost:8080 to launch the tool.
