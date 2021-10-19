@@ -1,4 +1,6 @@
-A Javascript tool to create [totalistic cellular automata](https://mathworld.wolfram.com/TotalisticCellularAutomaton.html).
+A Javascript tool to generate [Totalistic Cellular Automata](https://mathworld.wolfram.com/TotalisticCellularAutomaton.html).
+
+:rocket: [**Try live here**](https://vteromero.github.io/projects/totalistic-cellular-automata/)
 
 ## Demo
 
