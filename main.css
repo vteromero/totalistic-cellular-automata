@@ -98,11 +98,16 @@ body {
   border-color: #ccc;
 }
 
+.sidebar__checkbox-row {
+  white-space: nowrap;
+}
+
 .sidebar__button {
   background-color: #13adbd;
   border: none;
   color: #000066;
   font-size: 1.1rem;
+  overflow: hidden;
   padding: 1rem 2rem;
   white-space: nowrap;
   width: 100%;
@@ -134,6 +139,7 @@ body {
 .sidebar__permalink-container {
   color: #e0e0e0;
   margin: 2rem;
+  white-space: nowrap;
 }
 
 .sidebar__permalink {
