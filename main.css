@@ -144,3 +144,17 @@ body {
   overflow: scroll;
   transition: 1s ease;
 }
+
+.top-links {
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.top-links__link {
+  color: #000;
+}
