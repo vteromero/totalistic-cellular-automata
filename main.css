@@ -13,6 +13,7 @@ body {
 .sidebar {
   background-color: #484848;
   box-shadow: 1px 1px 3px #aaa;
+  flex-shrink: 0;
   position: relative;
   transition: 1s ease;
   width: 2rem;
