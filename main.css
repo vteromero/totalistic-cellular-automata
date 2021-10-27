@@ -12,9 +12,10 @@ body {
 
 .sidebar {
   background-color: #484848;
-  width: 2rem;
+  box-shadow: 1px 1px 3px #aaa;
   position: relative;
   transition: 1s ease;
+  width: 2rem;
 }
 
 .sidebar--large {
