@@ -177,8 +177,8 @@ export const resizeCanvas = (canvas, width, height) => {
 }
 
 export const automatonPermalinkURL = (baseUrl, props) => {
-  let url = new URL(baseUrl)
-  let searchParams = new URLSearchParams()
+  const url = new URL(baseUrl)
+  const searchParams = new URLSearchParams()
 
   searchParams.set('colors', props.colors)
   searchParams.set('cellSize', props.cellSize)
@@ -192,4 +192,13 @@ export const automatonPermalinkURL = (baseUrl, props) => {
   url.hash = ''
 
   return url
+}
+
+export const chunkArray = (arr, chunkSize) => {
+  const len = Math.ceil(arr.length / chunkSize)
+
+  return Array.from({length: len}, (_, i) => {
+    const j = i * chunkSize
+    return arr.slice(j, j + chunkSize)
+  })
 }
