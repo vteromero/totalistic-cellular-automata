@@ -1,7 +1,8 @@
 import {
   resizeCanvas,
   totatlisticCellularAutomatonFunctions,
-  automatonPermalinkURL
+  automatonPermalinkURL,
+  chunkArray
 } from './lib.js'
 
 const COLORS_MIN          = 2
@@ -73,8 +74,10 @@ const parseFirstRowParam = (firstRow, columns, automatonFuncs) => {
   }
 }
 
+const PALETTE_COLORS_PER_ROW = 4
+
 const addPaletteColorInputs = (palette) => {
-  const colorsInputs = palette.map(paletteColor => {
+  const colorInputs = palette.map(paletteColor => {
     const input = document.createElement('input')
     input.setAttribute('type', 'color')
     input.setAttribute('class', 'sidebar__color-input')
@@ -82,8 +85,16 @@ const addPaletteColorInputs = (palette) => {
 
     return input
   })
+  const chunkedColorInputs = chunkArray(colorInputs, PALETTE_COLORS_PER_ROW)
+  const colorInputRows = chunkedColorInputs.map(chunk => {
+    const row = document.createElement('div')
+    row.setAttribute('class', 'sidebar__palette-row')
+    chunk.forEach(colorInput => row.appendChild(colorInput))
 
-  document.querySelector('#palette-container').replaceChildren(...colorsInputs)
+    return row
+  })
+
+  document.querySelector('#palette-container').replaceChildren(...colorInputRows)
 }
 
 const disablePaletteColorInputs = (disabled) => {
