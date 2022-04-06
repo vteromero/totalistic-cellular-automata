@@ -8,6 +8,6 @@
   "author": "Vicente Romero Calero",
   "license": "MIT",
   "dependencies": {
-    "http-server": "^13.0.2"
+    "http-server": "14.1.0"
   }
 }
